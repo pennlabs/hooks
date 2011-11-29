@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 """
+Edited by AlexeyMK to be parametrized.
 Check Python source code formatting, according to PEP 8:
 http://www.python.org/dev/peps/pep-0008/
 
@@ -106,10 +107,19 @@ try:
 except NameError:
     from sets import ImmutableSet as frozenset
 
+import config
+
+try:
+  from config import MAX_LINE_LENGTH
+except ImportError:
+  MAX_LINE_LENGTH = 79
+try:
+  from config import INDENT_LEVEL
+except ImportError:
+  INDENT_LEVEL = 4
 
 DEFAULT_EXCLUDE = '.svn,CVS,.bzr,.hg,.git'
 DEFAULT_IGNORE = 'E24'
-MAX_LINE_LENGTH = 79
 
 INDENT_REGEX = re.compile(r'([ \t]*)')
 RAISE_COMMA_REGEX = re.compile(r'raise\s+\w+\s*(,)')
@@ -122,8 +132,7 @@ EXTRANEOUS_WHITESPACE_REGEX = re.compile(r'[[({] | []}),;:]')
 WHITESPACE_AROUND_NAMED_PARAMETER_REGEX = \
     re.compile(r'[()]|\s=[^=]|[^=!<>]=\s')
 
-
-WHITESPACE = ' \t'
+WHITESPACE = ' \t' #TODO Here: conventional on which one is allowed
 
 BINARY_OPERATORS = frozenset(['**=', '*=', '+=', '-=', '!=', '<>',
     '%=', '^=', '&=', '|=', '==', '/=', '//=', '<=', '>=', '<<=', '>>=',
@@ -376,8 +385,8 @@ def indentation(logical_line, previous_logical, indent_char,
     Okay: a = 1\nb = 2
     E113: a = 1\n    b = 2
     """
-    if indent_char == ' ' and indent_level % 4:
-        return 0, "E111 indentation is not a multiple of four"
+    if indent_char == ' ' and indent_level % INDENT_LEVEL:
+        return 0, "E111 indentation is not a multiple of %d" % (INDENT_LEVEL)
     indent_expect = previous_logical.endswith(':')
     if indent_expect and indent_level <= previous_indent_level:
         return 0, "E112 expected an indented block"
