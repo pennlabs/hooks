@@ -1,7 +1,3 @@
-
-https://raw.github.com/jcrocholl/pep8/master/pep8.py
-https://raw.github.com/jcrocholl/pep8/master/pep8.py
-hheck Python source code formatting, according to PEP 8
 # Copyright (C) 2006 Johann C. Rocholl <johann@rocholl.net>
 #
 # Permission is hereby granted, free of charge, to any person
