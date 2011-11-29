@@ -10,7 +10,7 @@ if __name__ == "__main__":
   def run(command):
       p = Popen(command.split(), stdout=PIPE, stderr=PIPE)
       p.wait()
-      return p.returncode, p.stdout.read().strip().split(), p.stderr.read()
+      return p.returncode, p.stdout.read(), p.stderr.read()
 
   hook = "git@github.com:pennappslabs/hooks.git"
   commands = ( 
