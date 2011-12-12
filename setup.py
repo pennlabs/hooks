@@ -13,9 +13,10 @@ if __name__ == "__main__":
       return p.returncode, p.stdout.read(), p.stderr.read()
 
   hook = "git@github.com:pennappslabs/hooks.git"
+  branch = "pcrapi"
   commands = ( 
       'rm -fr .git/hooks',
-      'git clone %s .git/hooks' % hook,
+      'git clone %s %s .git/hooks' % (hook, "-b %s" % branch if branch else ""),
       'chmod +x .git/hooks/pre-commit',
       )
   for command in commands:
