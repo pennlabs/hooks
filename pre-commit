@@ -1,27 +1,2 @@
-#!/usr/bin/env python
-#-*- mode: python -*-
-
-from subprocess import Popen, PIPE
-import sys
-
-syntax_checker = "pep8"
-
-def run(command):
-    p = Popen(command.split(), stdout=PIPE, stderr=PIPE)
-    p.wait()
-    return p.returncode, p.stdout.read(), p.stderr.read()
-
-_, files_modified, _= run("git diff-index --name-only HEAD")
-
-for fname in files_modified.strip().split():
-    print "Checking %s" % (fname,)
-    if fname.endswith(".py"):
-        print >>sys.stderr, "Checking syntax on %s: ... " % (fname,),
-        exit_code, out, errors = run("%s %s"%(syntax_checker, fname))
-        if exit_code != 0:
-            print >>sys.stderr, "\rChecking syntax on %s: FAILED \n%s\n%s" \
-                % (fname, out, errors)
-            print >>sys.stderr, "\rFix the errors before committing."
-            sys.exit(exit_code)
-        else:
-            print >>sys.stderr, "\rChecking syntax on %s: OK!"%(fname,)
+python api/manage.py test courses
+exit $?
